@@ -59,7 +59,7 @@ defmodule App.ElixirStatusChannel do
   def load_stash do
     Logger.log :info, "Loading :elixistatus Stash"
 
-    result = case Stash.load :elixirstatus, @stash_file do
+    case Stash.load :elixirstatus, @stash_file do
       {:error, {_, reason, code}} ->
         Logger.log :warn, "#{code} #{reason}"
       :ok ->
