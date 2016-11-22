@@ -1,7 +1,7 @@
 defmodule App.ElixirStatusChannel do
   require Logger
 
-  @channel "@elixirstatus"
+  @channel Application.get_env(:app, :elixirstatus_channel)
   @stash_file Path.join(App.storage_dir, "elixirstatus.cache")
 
   def update do

@@ -1,8 +1,9 @@
 use Mix.Config
 
 config :app,
-  bot_name: System.get_env("BOT_NAME"),
-  storage_dir: "./storage"
+  storage_dir: "./storage",
+  bot_name: "elixir_lang_test_bot",
+  elixirstatus_channel: "@elixirstatus_dev"
 
 config :nadia,
   token: System.get_env("BOT_TOKEN")
