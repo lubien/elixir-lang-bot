@@ -16,7 +16,7 @@ defmodule App.Hex do
   end
 
   def package_to_inline_query_result(package) do
-    url = package["url"]
+    url = String.replace package["url"], "/api", ""
     name = package["name"]
     description = get_in(package, ["meta", "description"])
     github = get_in(package, ["meta", "links", "github"]) ||
