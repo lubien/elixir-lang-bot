@@ -8,12 +8,12 @@ defmodule App.Mixfile do
      default_task: "server",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps,
-     aliases: aliases]
+     deps: deps(),
+     aliases: aliases()]
   end
 
   def application do
-    [applications: [:logger, :nadia, :httpoison, :calendar],
+    [applications: [:logger, :nadia, :httpoison, :calendar, :ex_statsd],
      mod: {App, []}]
   end
 
@@ -23,7 +23,8 @@ defmodule App.Mixfile do
      {:httpoison, "~> 0.10.0"},
      {:stash, "~> 1.0.0"},
      {:calendar, "~> 0.16.1"},
-     {:html_entities, "~> 0.3.0"}]
+     {:html_entities, "~> 0.3.0"},
+     {:ex_statsd, ">= 0.5.1"}]
   end
 
   defp aliases do
