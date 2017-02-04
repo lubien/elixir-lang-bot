@@ -11,6 +11,6 @@ config :nadia,
 config :ex_statsd,
        host: "localhost",
        port: 8125,
-       namespace: "elixirstatus"
+       namespace: "elixir_lang_bot"
 
 import_config "#{Mix.env}.exs"
