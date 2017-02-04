@@ -1,4 +1,5 @@
 defmodule App.Commands do
+  use App.Router
   use App.Commander
 
   @bot_name Application.get_env(:app, :bot_name)
