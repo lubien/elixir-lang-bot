@@ -149,14 +149,7 @@ defmodule App.Commander do
 
   defmacro get_chat_id do
     quote do
-      case var!(update) do
-        %{inline_query: inline_query} when not is_nil(inline_query) ->
-          inline_query.from.id
-        %{callback_query: callback_query} when not is_nil(callback_query) ->
-          callback_query.message.chat.id
-        update ->
-          update.message.chat.id
-      end
+      App.Telegram.get_chat_id var!(update)
     end
   end
 end

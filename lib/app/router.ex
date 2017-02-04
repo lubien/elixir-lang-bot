@@ -38,6 +38,7 @@ defmodule App.Router do
         }
       } = var!(update)) do
         handle_message unquote(handler), [var!(update)]
+        count_command(unquote(command))
       end
 
       def do_match_message(%{
@@ -46,6 +47,7 @@ defmodule App.Router do
         }
       } = var!(update)) do
         handle_message unquote(handler), [var!(update)]
+        count_command(unquote(command))
       end
 
       def do_match_message(%{
@@ -54,6 +56,7 @@ defmodule App.Router do
         }
       } = var!(update)) do
         handle_message unquote(handler), [var!(update)]
+        count_command(unquote(command))
       end
 
       def do_match_message(%{
@@ -62,6 +65,7 @@ defmodule App.Router do
         }
       } = var!(update)) do
         handle_message unquote(handler), [var!(update)]
+        count_command(unquote(command))
       end
     end
   end
@@ -71,6 +75,7 @@ defmodule App.Router do
       def do_match_message(%{inline_query: inline_query} = var!(update))
       when not is_nil(inline_query) do
         handle_message unquote(handler), [var!(update)]
+        count_inline_query()
       end
     end
   end
@@ -81,12 +86,14 @@ defmodule App.Router do
         inline_query: %{query: "/" <> unquote(command)}
       } = var!(update)) do
         handle_message unquote(handler), [var!(update)]
+        count_inline_query([unquote(command)])
       end
 
       def do_match_message(%{
         inline_query: %{query: "/" <> unquote(command) <> " " <> _}
       } = var!(update)) do
         handle_message unquote(handler), [var!(update)]
+        count_inline_query([unquote(command)])
       end
     end
   end
@@ -96,6 +103,7 @@ defmodule App.Router do
       def do_match_message(%{callback_query: callback_query} = var!(update))
       when not is_nil(callback_query) do
         handle_message unquote(handler), [var!(update)]
+        count_callback_query()
       end
     end
   end
@@ -106,12 +114,14 @@ defmodule App.Router do
         callback_query: %{data: "/" <> unquote(command)}
       } = var!(update)) do
         handle_message unquote(handler), [var!(update)]
+        count_callback_query([unquote(command)])
       end
 
       def do_match_message(%{
         callback_query: %{data: "/" <> unquote(command) <> " " <> _}
       } = var!(update)) do
         handle_message unquote(handler), [var!(update)]
+        count_callback_query([unquote(command)])
       end
     end
   end
@@ -234,4 +244,18 @@ defmodule App.Router do
   end
 
   def handle_message(_, _), do: nil
+
+  # Metrics
+
+  def count_command(command, tags \\ []) do
+    ExStatsD.increment("command.trigger", tags: [command | tags])
+  end
+
+  def count_inline_query(tags \\ []) do
+    ExStatsD.increment("inline_query.trigger", tags: tags)
+  end
+
+  def count_callback_query(tags \\ []) do
+    ExStatsD.increment("callback_query.trigger", tags: tags)
+  end
 end

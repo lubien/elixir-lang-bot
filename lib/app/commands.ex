@@ -42,6 +42,8 @@ defmodule App.Commands do
 
   inline_query do
     answer_inline_query []
+
+    ExStatsD.increment("inline_query.unmatched")
   end
 
   message do
@@ -49,5 +51,7 @@ defmodule App.Commands do
     Sorry, I didn't undestand.
     Try running the /help command.
     """
+
+    ExStatsD.increment("message.unmatched")
   end
 end

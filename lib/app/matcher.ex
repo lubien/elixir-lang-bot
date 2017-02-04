@@ -1,6 +1,6 @@
 defmodule App.Matcher do
   use GenServer
-  alias App.Commands
+  alias App.{Commands, Telegram}
 
   # Server
 
@@ -13,6 +13,10 @@ defmodule App.Matcher do
   end
 
   def handle_cast(message, state) do
+    message
+    |> Telegram.get_chat_id
+    |> ExStatsD.set("users")
+
     Commands.match_message message
 
     {:noreply, state}

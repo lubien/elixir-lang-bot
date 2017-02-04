@@ -60,8 +60,10 @@ defmodule App.Feed.ElixirStatus do
     end)
   end
 
-  defp send_to_channel([]), do: nil
+  defp send_to_channel([]), do: ExStatsD.increment("feeds.elixistatus.noop")
   defp send_to_channel(feed) do
+    ExStatsD.increment("feeds.elixistatus.update")
+
     last_entry = feed
                  |> Enum.reverse
                  |> Enum.map(&format_entry/1)
