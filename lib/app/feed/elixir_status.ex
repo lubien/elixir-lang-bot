@@ -41,7 +41,7 @@ defmodule App.Feed.ElixirStatus do
   defp filter_posted(feed) do
     last_timestamp = case get_last_timestamp() do
       {:error, :none} ->
-        Logger.warn "There was no last timestamp for :elixistatus, so we use the last entry"
+        Logger.warn "There was no last timestamp for :elixirstatus, so we use the last entry"
 
         # If there's no last timestamp, assume it's the most recent entry so if
         # you deploy this app to a new server you'll not get duplicated entries
@@ -52,7 +52,7 @@ defmodule App.Feed.ElixirStatus do
       {:ok, value} -> value
     end
 
-    Logger.info "Last timestamp for :elixistatus was #{last_timestamp}"
+    Logger.info "Last timestamp for :elixirstatus was #{last_timestamp}"
 
     feed
     |> Enum.filter(fn entry ->
@@ -60,9 +60,9 @@ defmodule App.Feed.ElixirStatus do
     end)
   end
 
-  defp send_to_channel([]), do: ExStatsD.increment("feeds.elixistatus.noop")
+  defp send_to_channel([]), do: ExStatsD.increment("feeds.elixirstatus.noop")
   defp send_to_channel(feed) do
-    ExStatsD.increment("feeds.elixistatus.update")
+    ExStatsD.increment("feeds.elixirstatus.update")
 
     last_entry = feed
                  |> Enum.reverse
