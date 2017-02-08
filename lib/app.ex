@@ -17,7 +17,8 @@ defmodule App do
     children = [
       worker(App.Poller, []),
       worker(App.Matcher, []),
-      worker(App.FeedsPoller, [])
+      worker(App.FeedsPoller, []),
+      worker(App.Stats, []),
     ]
 
     opts = [strategy: :one_for_one, name: App.Supervisor]

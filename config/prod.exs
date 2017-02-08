@@ -6,7 +6,5 @@ config :app,
   pctguama_channel: "@pctguama",
   relixir_channel: "@rElixir",
   elixir_forum_channel: "@elixir_forum",
-  storage_dir: "/app/storage/"
-
-config :ex_statsd,
-       host: System.get_env("DOGSTATSD_PORT_8125_UDP_ADDR")
+  storage_dir: "/app/storage/",
+  statsd_host: System.get_env("DOGSTATSD_PORT_8125_UDP_ADDR")

@@ -13,7 +13,7 @@ defmodule App.Mixfile do
   end
 
   def application do
-    [applications: [:logger, :nadia, :httpoison, :calendar, :ex_statsd],
+    [applications: [:logger, :nadia, :httpoison, :calendar, :dogstatsd],
      mod: {App, []}]
   end
 
@@ -24,7 +24,7 @@ defmodule App.Mixfile do
      {:stash, "~> 1.0.0"},
      {:calendar, "~> 0.16.1"},
      {:html_entities, "~> 0.3.0"},
-     {:ex_statsd, ">= 0.5.1"}]
+     {:dogstatsd, "0.0.3"}]
   end
 
   defp aliases do

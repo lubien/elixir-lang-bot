@@ -7,6 +7,7 @@ defmodule App.Feed.Rss do
       import App.Feed.Rss
       alias App.Persistor
       alias App.Feed.Formatter
+      alias App.Stats
 
       # Public API
 
@@ -66,9 +67,9 @@ defmodule App.Feed.Rss do
         end)
       end
 
-      defp send_to_channel([]), do: ExStatsD.increment("feeds.#{@feed_id}.noop")
+      defp send_to_channel([]), do: Stats.increment("feeds.#{@feed_id}.noop")
       defp send_to_channel(feed) do
-        ExStatsD.increment "feeds.#{@feed_id}.update"
+        Stats.increment "feeds.#{@feed_id}.update"
 
         last_entry = feed
                      |> Enum.reverse
@@ -82,7 +83,7 @@ defmodule App.Feed.Rss do
         text = Formatter.format_entry entry, @render_mode
 
         Nadia.send_message @channel, text, parse_mode: @render_mode
-        ExStatsD.increment "feeds.#{@feed_id}.entries"
+        Stats.increment "feeds.#{@feed_id}.entries"
 
         entry
       end

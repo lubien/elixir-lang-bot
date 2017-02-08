@@ -1,6 +1,7 @@
 defmodule App.Commands do
   use App.Router
   use App.Commander
+  alias App.Stats
 
   @bot_name Application.get_env(:app, :bot_name)
 
@@ -49,7 +50,7 @@ defmodule App.Commands do
   inline_query do
     answer_inline_query []
 
-    ExStatsD.increment("inline_query.unmatched")
+    Stats.increment("inline_query.unmatched")
   end
 
   message do
@@ -58,6 +59,6 @@ defmodule App.Commands do
     Try running the /help command.
     """
 
-    ExStatsD.increment("message.unmatched")
+    Stats.increment("message.unmatched")
   end
 end

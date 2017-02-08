@@ -1,4 +1,6 @@
 defmodule App.Router do
+  alias App.Stats
+
   @bot_name Application.get_env(:app, :bot_name)
 
   # Code injectors
@@ -248,14 +250,14 @@ defmodule App.Router do
   # Metrics
 
   def count_command(command, tags \\ []) do
-    ExStatsD.increment("command.trigger", tags: [command | tags])
+    Stats.increment("command.trigger", tags: [command | tags])
   end
 
   def count_inline_query(tags \\ []) do
-    ExStatsD.increment("inline_query.trigger", tags: tags)
+    Stats.increment("inline_query.trigger", tags: tags)
   end
 
   def count_callback_query(tags \\ []) do
-    ExStatsD.increment("callback_query.trigger", tags: tags)
+    Stats.increment("callback_query.trigger", tags: tags)
   end
 end
