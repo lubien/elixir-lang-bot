@@ -113,7 +113,7 @@ defmodule App.Feed.Rss do
   end
 
   defp parse_feed(feed) do
-    {:ok, feed, rest} = FeederEx.parse feed
+    {:ok, feed, _} = FeederEx.parse feed
     feed.entries
   end
 end
