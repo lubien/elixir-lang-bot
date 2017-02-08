@@ -24,7 +24,7 @@ defmodule App.Stats do
     GenServer.cast __MODULE__, {:increment, {name, opts}}
   end
 
-  def set(name, value, opts \\ %{}) do
+  def set(value, name, opts \\ %{}) do
     GenServer.cast __MODULE__, {:set, {name, value, opts}}
   end
 
