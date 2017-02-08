@@ -16,22 +16,41 @@ defmodule App.Feed.Rss do
 
       def tick do
         retreive_feed(@url)
+        |> dates_to_timestamp
+        |> sort_entries
         |> filter_posted
         |> send_to_channel
       end
 
       # Private API
 
+      def dates_to_timestamp(feed) do
+        fun = case @date_format do
+          "rfc3339" ->
+            &Formatter.from_rfc3339_to_unix/1
+          _ ->
+            &Formatter.from_rfc2822_to_unix/1
+        end
+
+        feed
+        |> Enum.map(fn entry ->
+          Map.update(entry, :updated, 0, fun)
+        end)
+      end
+
+      defp sort_entries(feed) do
+        feed
+        |> Enum.sort_by(&(Map.fetch!(&1, :updated)))
+      end
+
       defp filter_posted(feed) do
         last_timestamp = case get_last_timestamp() do
           {:error, :none} ->
-            Logger.warn "There was no last timestamp for :#{@feed_id}, so we use the last entry"
+            Logger.warn "There was no last timestamp for :#{@feed_id}, so we use zero"
 
-            # If there's no last timestamp, assume it's the most recent entry so if
-            # you deploy this app to a new server you'll not get duplicated entries
-            feed
-            |> hd
-            |> Map.fetch!(:updated)
+            # If there's no last timestamp, assume it's zero so the feed can be
+            # populated
+            0
 
           {:ok, value} ->
             value
@@ -58,9 +77,9 @@ defmodule App.Feed.Rss do
       end
 
       defp send_entry(entry) do
-        text = Formatter.format_entry entry
+        text = Formatter.format_entry entry, @render_mode
 
-        Nadia.send_message @channel, text, parse_mode: "markdown"
+        Nadia.send_message @channel, text, parse_mode: @render_mode
         ExStatsD.increment "feeds.#{@feed_id}.entries"
 
         entry
@@ -85,7 +104,6 @@ defmodule App.Feed.Rss do
     url
     |> get_feed
     |> parse_feed
-    |> convert_feed_dates
   end
 
   defp get_feed(url) do
@@ -97,10 +115,5 @@ defmodule App.Feed.Rss do
   defp parse_feed(feed) do
     {:ok, feed, rest} = FeederEx.parse feed
     feed.entries
-  end
-
-  defp convert_feed_dates(feed) do
-    feed
-    |> Enum.map(&Formatter.rss_date_to_timestamp/1)
   end
 end
