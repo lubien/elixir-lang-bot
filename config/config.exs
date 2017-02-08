@@ -5,7 +5,7 @@ config :app,
   bot_name: "elixir_lang_test_bot",
   elixirstatus_channel: "-1001088152256",
   pctguama_channel: "-1001110185325",
-  pctguama_channel: "@pctguama_dev"
+  relixir_channel: "-1001117355733"
 
 config :nadia,
   token: System.get_env("BOT_TOKEN")

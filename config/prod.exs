@@ -4,6 +4,7 @@ config :app,
   bot_name: "elixir_lang_bot",
   elixirstatus_channel: "@elixirstatus",
   pctguama_channel: "@pctguama",
+  relixir_channel: "@rElixir",
   storage_dir: "/app/storage/"
 
 config :ex_statsd,
