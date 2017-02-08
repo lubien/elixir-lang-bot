@@ -44,13 +44,6 @@ defmodule App.FeedsPoller do
     GenServer.cast __MODULE__, :update
   end
 
-  defp apply_to_feeds(function, args \\ []) do
-    @feeds
-    |> Enum.map(fn feed ->
-      apply feed, function, args
-    end)
-  end
-
   defp init_feeds do
     @feeds
     |> Enum.map(fn feed ->
