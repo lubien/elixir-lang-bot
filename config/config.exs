@@ -3,7 +3,8 @@ use Mix.Config
 config :app,
   storage_dir: "./storage",
   bot_name: "elixir_lang_test_bot",
-  elixirstatus_channel: "@elixirstatus_dev",
+  elixirstatus_channel: "-1001088152256",
+  pctguama_channel: "-1001110185325",
   pctguama_channel: "@pctguama_dev"
 
 config :nadia,
