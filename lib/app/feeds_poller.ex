@@ -4,7 +4,8 @@ defmodule App.FeedsPoller do
   alias App.Feed
 
   @feeds [
-    Feed.ElixirStatus
+    Feed.ElixirStatus,
+    Feed.PCTGuama
   ]
 
   # 30 minutes poll intervals
@@ -31,6 +32,11 @@ defmodule App.FeedsPoller do
     {:noreply, 0}
   end
 
+  # Ignore task info
+  def handle_info(_, _) do
+    {:noreply, 0}
+  end
+
   # Helpers
 
   defp trigger_update do
@@ -45,12 +51,18 @@ defmodule App.FeedsPoller do
   end
 
   defp init_feeds do
-    apply_to_feeds :init
+    @feeds
+    |> Enum.map(fn feed ->
+      apply feed, :init, []
+    end)
   end
 
   defp tick_feeds do
     Logger.info "Triggered tick to feeds"
 
-    apply_to_feeds :tick
+    @feeds
+    |> Enum.map(fn feed ->
+      Task.async fn -> apply feed, :tick, [] end
+    end)
   end
 end
