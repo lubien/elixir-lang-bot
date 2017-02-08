@@ -15,6 +15,8 @@ defmodule App.Feed.Rss do
       end
 
       def tick do
+        Logger.info "Tick for :#{@feed_id}"
+
         retreive_feed(@url)
         |> dates_to_timestamp
         |> sort_entries
