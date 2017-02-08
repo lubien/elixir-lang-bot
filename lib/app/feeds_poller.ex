@@ -6,7 +6,8 @@ defmodule App.FeedsPoller do
   @feeds [
     Feed.ElixirStatus,
     Feed.PCTGuama,
-    Feed.RElixir
+    Feed.RElixir,
+    Feed.ElixirForum
   ]
 
   # 30 minutes poll intervals

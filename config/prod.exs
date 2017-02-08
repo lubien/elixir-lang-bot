@@ -5,6 +5,7 @@ config :app,
   elixirstatus_channel: "@elixirstatus",
   pctguama_channel: "@pctguama",
   relixir_channel: "@rElixir",
+  elixir_forum_channel: "@elixir_forum",
   storage_dir: "/app/storage/"
 
 config :ex_statsd,
