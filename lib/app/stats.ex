@@ -10,7 +10,9 @@ defmodule App.Stats do
   def start_link do
     Logger.info "Started stats server"
 
-    {:ok, statsd} = DogStatsd.new("localhost", 8125)
+    host = Application.get_env(:app, :statsd_host)
+    port = 8125
+    {:ok, statsd} = DogStatsd.new(host, port)
     GenServer.start_link __MODULE__, statsd, name: __MODULE__
   end
 
@@ -33,7 +35,7 @@ defmodule App.Stats do
   # Private API
 
   def handle_cast({:increment, {name, opts}}, statsd) do
-    DogStatsd.increment statsd, @prefix <> name
+    DogStatsd.increment statsd, @prefix <> name, opts
     {:noreply, statsd}
   end
 
