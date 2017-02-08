@@ -17,6 +17,12 @@ defmodule App.Commands do
     <i>For inline commands, type "@#{@bot_name}" then the command.</i>
 
     <code>/hex [package_name]</code>
+
+    <b>Channels</b>
+
+    @elixir_forum - <i>Elixir forum</i>
+    @rElixir - <i>Elixir subreddit</i>
+    @elixirstatus - <i>Elixirstatus</i>
     """
 
     {:ok, _} = send_message message, parse_mode: "html"
