@@ -29,11 +29,9 @@ defmodule App.Feed.Rss do
 
             # If there's no last timestamp, assume it's the most recent entry so if
             # you deploy this app to a new server you'll not get duplicated entries
-            # feed
-            # |> hd
-            # |> Map.fetch!(:updated)
-            # Comment so I could start my feed with some entries (:
-            0
+            feed
+            |> hd
+            |> Map.fetch!(:updated)
 
           {:ok, value} ->
             value
