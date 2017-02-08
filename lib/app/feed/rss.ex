@@ -40,7 +40,7 @@ defmodule App.Feed.Rss do
 
       defp sort_entries(feed) do
         feed
-        |> Enum.sort_by(&(Map.fetch!(&1, :updated)))
+        |> Enum.sort_by(&(Map.fetch!(&1, :updated)), &>=/2)
       end
 
       defp filter_posted(feed) do
